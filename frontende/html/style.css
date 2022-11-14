@@ -1,0 +1,121 @@
+@font-face {
+  font-family: "Namun";
+  src: url("./fonts/NanumGothic-Regular.ttf");
+}
+:root{
+  --background: #272727;
+  --main-color: #d81929;
+  --secondary-color: #820d18;
+}
+*{
+  margin: 0;
+  padding: 0;
+  font-family: "Namun", serif;
+}
+.header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2em;
+  letter-spacing: 0.1em;
+  /* border-bottom: 2px solid white; */
+}
+.header__h1{
+  text-transform: uppercase;
+  padding-bottom: 0.5em;
+}
+body{
+  background-color: var(--background);
+  color: white;
+  min-height: fit-content;
+}
+.card__container{
+  display: flex;
+  flex-wrap: wrap;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin: 1em;
+}
+.card{
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  width: fit-content;
+  max-width: 25%;
+  margin: 2.5%;
+  padding: 1em;
+}
+.h2{
+  text-transform: uppercase;
+}
+.h2, .card__p{
+  padding: 0.5em;
+}
+.card__text{
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1em;
+  margin: 0.5em;
+}
+.card__btns{
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card__btn{
+  display: inline-block;
+  padding: 0.8em;
+  background-image: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  margin: 0.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8em;
+}
+.card__btn:hover{
+  background-image: linear-gradient(to right, var(--secondary-color), var(--main-color));
+}
+.card__btn:active {
+  background-color: var(--secondary-color);
+  background-image: none;
+}
+.formAddCard__input{
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 1em;
+    margin: 0.5em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30em;
+    font-family: "Namun";
+    color: white;
+}
+.formAddCard__input:focus-visible{
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 1);
+}
+.formAddCard__h2{
+  text-align: center;
+}
+@media (max-width: 1100px) {
+  .card{
+    max-width: 40%;
+  }
+}
+@media (max-width: 750px) {
+  .card{
+    max-width: 100%;
+  }
+}

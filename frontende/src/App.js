@@ -1,0 +1,38 @@
+import './App.css';
+import Main from './pages/main/Main';
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Login from './pages/login/Login';
+import Register from './pages/register/Register';
+
+function App() {
+
+  return (
+    <BrowserRouter>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Main</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Routes>
+          <Route exact path="/" element={<Main />}/>
+          <Route exact path="/login" element={<Login/>}/>
+          <Route exact path="/register" element={<Register/>}/>
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;
