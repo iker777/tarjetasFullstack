@@ -1,16 +1,6 @@
 import React from 'react'
 
-export const FormAddCard = () => {
-
-  
-  const addCard = () => {
-    const title = document.querySelector(".formAddCard__input--title").value;
-    const message = document.querySelector(".formAddCard__input--message").value;
-    const cardText = {
-      title: title,
-      message: message 
-    }
-  }
+export const FormAddCard = ({ addCard }) => {
 
   return (
     <section className="formContainer">

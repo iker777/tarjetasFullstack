@@ -1,16 +1,15 @@
 import React from 'react'
 
-export const Card = () => {
+export const Card = ({title, message}) => {
   return (
       <article className="card">
         <div className="card__head">
-          <h2 className="card__h2 h2">Título tarjeta</h2>
+          <h2 className="card__h2 h2">{title}</h2>
         </div>
         <div className="card__body">
           <div className="card__text">
             <p className="card__p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-              consectetur eveniet sequi quasi excepturi
+              {message}
             </p>
           </div>
           <div className="card__btns">
