@@ -18,7 +18,7 @@ const Register = () => {
 
   const onClick = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3030/register", {}).then((res) => console.log(res));
+    axios.post("http://localhost:3030/register", data).then((res) => console.log(res));
     console.log(data);
   }
 

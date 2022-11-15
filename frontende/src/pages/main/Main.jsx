@@ -10,19 +10,18 @@ const Main = () => {
 
   const addCard = () => {
     const title = document.querySelector(".formAddCard__input--title").value;
-    const message = document.querySelector(
-      ".formAddCard__input--message"
-    ).value;
+    const message = document.querySelector(".formAddCard__input--message").value;
     
-    setcardText({
-      // id: new Date().getTime(),
-      title: title,
-      message: message,
-    });
+    setcardList([
+      ...cardList,
+      {
+        title: title,
+        message: message,
+      },
+    ]);
 
-    setcardList(elements => {
-      return [...elements, cardText]
-    });
+    document.querySelector(".formAddCard__input--title").value = "";
+    document.querySelector(".formAddCard__input--message").value = "";
   };
 
 
