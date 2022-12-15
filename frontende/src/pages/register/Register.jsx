@@ -24,22 +24,28 @@ const Register = () => {
 
   return (
     <div>
-      <form>
+      <form className='registerForm'>
         <input
           name="mail"
+          className='registerForm__input'
           type="text"
           placeholder="Email"
           onChange={handleOnChange}
         />
-        <br />
         <input
           name="paswd"
+          className='registerForm__input'
           type="password"
           placeholder="password"
           onChange={handleOnChange}
         />
         <br />
-        <input type="submit" value="Enviar" onClick={onClick}/>
+        <input
+          className='registerForm__submit'
+          type="submit" 
+          value="Enviar" 
+          onClick={onClick}
+        />
       </form>
     </div>
   );

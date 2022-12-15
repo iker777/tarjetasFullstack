@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from "axios";
 
 const Login = () => {
 
@@ -12,13 +13,27 @@ const Login = () => {
       ...data,
       [e.target.name]: e.target.value
     })
-    console.log(data);
   }
 
-  const onClick = (e) => {
-    e.preventDefault();
-    console.log(data);
-  }
+    const onClick = (e) => {
+      e.preventDefault();
+      axios
+        .post("http://localhost:3030/login", data)
+        .then((res) => {
+
+          if(!res || !res.data){
+            alert("Error general");
+            return;
+          }
+          if(res.data.error){
+            alert(res.data.text);
+            return;
+          }
+          alert(`Hola ${res.data.mail}`);
+          localStorage.setItem("user", JSON.stringify(res.data))
+        });
+      console.log(data);
+    };
 
   return (
     <div>

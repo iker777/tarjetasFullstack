@@ -30,7 +30,7 @@ const Main = () => {
       <div className="header">
         <h1 className="header__h1">Juego de tarjetas</h1>
       </div>
-      <CardContainer cardList={cardList}/>
+      {cardList.length > 0? <CardContainer cardList={cardList}/>: ""}
       <FormAddCard addCard={addCard}/>
     </div>
   )
