@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const FormAddCard = ({ addCard }) => {
+export const FormAddCard = ({ addCard, titleElement, messageElement }) => {
 
   return (
     <section className="formContainer">
@@ -8,11 +8,13 @@ export const FormAddCard = ({ addCard }) => {
         <h2 className="formAddCard__h2 h2">Añadir nueva tarjeta</h2>
         <div className="formAddCard__inputContainer">
           <input
+            ref = {titleElement}
             className="formAddCard__input formAddCard__input--title"
             type="text"
             placeholder="Escribe el título..."
           />
           <input
+            ref={messageElement}
             className="formAddCard__input formAddCard__input--message"
             type="text"
             placeholder="Escribe el texto..."

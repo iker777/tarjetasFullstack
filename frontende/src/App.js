@@ -3,6 +3,7 @@ import Main from './pages/main/Main';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import Logout from './pages/logout/Logout';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/main" element={<Main />}/>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
+          <Route exact path="/logout" element={<Logout/>}/>
         </Routes>
       </div>
     </BrowserRouter>
