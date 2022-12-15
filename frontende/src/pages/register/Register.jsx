@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 const Register = () => {
 
@@ -23,31 +24,36 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <form className='registerForm'>
-        <input
-          name="mail"
-          className='registerForm__input'
-          type="text"
-          placeholder="Email"
-          onChange={handleOnChange}
-        />
-        <input
-          name="paswd"
-          className='registerForm__input'
-          type="password"
-          placeholder="password"
-          onChange={handleOnChange}
-        />
-        <br />
-        <input
-          className='registerForm__submit'
-          type="submit" 
-          value="Enviar" 
-          onClick={onClick}
-        />
-      </form>
-    </div>
+    <>
+      <h1 className="form__h1">Registro</h1>
+      <div className="formContainer">
+        <form className="form">
+          <input
+            name="mail"
+            type="text"
+            placeholder="Email"
+            onChange={handleOnChange}
+            className="form__textInput"
+          />
+          <input
+            name="paswd"
+            type="password"
+            placeholder="password"
+            onChange={handleOnChange}
+            className="form__textInput"
+          />
+          <input
+            type="submit"
+            value="Enviar"
+            onClick={onClick}
+            className="form__submit"
+          />
+          <Link className="form__link" to="/login">
+            ¿Ya tienes cuenta?
+          </Link>
+        </form>
+      </div>
+    </>
   );
 }
 

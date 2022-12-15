@@ -18,6 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const sequelize_1 = require("sequelize");
+// Estos son los pasos necesarios si no tuvieramos sequelize
 // const con = mysql.createConnection({
 //   host: "127.0.0.1",
 //   user: "tarjetas",
@@ -29,6 +30,7 @@ const sequelize_1 = require("sequelize");
 //   console.log("MySQL connected successfully.");
 // });
 // Rellenar la configuración del sequelize
+// sequelize tiene la ventaja de poder conectar fácilmente con cualquier tipo de base de datos
 const sequelize = new sequelize_1.Sequelize("bd_tarjetas", "tarjetas", "Admin1234", {
     host: "localhost",
     dialect: "mysql",
@@ -65,7 +67,7 @@ const User = sequelize.define("user", {
 //   .catch((error) => {
 //     console.error("Unable to create table : ", error);
 //   });
-// Creación del servidor
+// Creación del servidor con express
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3030;
 // Permite hacer peticiones de todas partes. En producción no sería buena práctica.
@@ -79,11 +81,11 @@ app.listen(PORT, () => console.log("Okeyy!"));
 app.get("/", (req, res) => {
     res.send("Hola Mundo");
 });
-// Parámetros: localhost:3030/nombre/Santy
+// Parámetros en la URL: localhost:3030/nombre/Santy
 app.get("/nombre/:nombre", (req, res) => {
     res.send(`Hola ${req.params.nombre}`);
 });
-// Query. Más sencillo para poner más de una variable
+// Query en la URL. Más sencillo para poner más de una variable
 // localhost:3030/user?nombre=Iker
 app.get("/user", (req, res) => {
     res.send(`Hola ${req.query.nombre}`);

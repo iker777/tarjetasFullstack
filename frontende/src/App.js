@@ -9,15 +9,15 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Main</Link>
+        <nav className='nav'>
+          <ul className='nav__ul'>
+            <li className='nav__li'>
+              <Link to="/main">Main</Link>
             </li>
-            <li>
+            <li className='nav__li'>
               <Link to="/login">Login</Link>
             </li>
-            <li>
+            <li className='nav__li'>
               <Link to="/register">Register</Link>
             </li>
           </ul>
@@ -26,7 +26,9 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Routes>
-          <Route exact path="/" element={<Main />}/>
+        {/* Chapuza??? hacer el login en  /???*/}
+          <Route exact path="/" element={<Login/>}/>
+          <Route exact path="/main" element={<Main />}/>
           <Route exact path="/login" element={<Login/>}/>
           <Route exact path="/register" element={<Register/>}/>
         </Routes>

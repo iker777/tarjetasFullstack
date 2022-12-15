@@ -15,6 +15,26 @@
   font-family: "Namun", serif;
 }
 
+.nav{
+  padding: 2em;
+  padding-bottom: 4em;
+}
+.nav__ul{
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+}
+.nav__li a{
+  color: white;
+  text-decoration: none;
+}
+.nav__li a:hover{
+  color: var(--main-color);
+}
+.nav__li a:focus{
+  text-decoration: revert;
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -128,13 +148,66 @@ body {
   text-align: center;
 }
 
-.registerForm{
-    position: fixed;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      z-index: 10;
+.formContainer{
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+}
+.form__h1{
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 0.5em;
+}
+.form__textInput{
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1em;
+  margin: 0.5em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30em;
+  font-family: "Namun";
+  color: white;
+}
+.form__textInput:focus-visible{
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 1);
+}
+.form__submit{
+  display: inline-block;
+  padding: 0.8em;
+  background-image: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  margin: 0.5em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8em;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form__submit:hover {
+  background-image: linear-gradient(to right, var(--secondary-color), var(--main-color));
+}
+
+.form__submit:active {
+  background-color: var(--secondary-color);
+  background-image: none;
+}
+.form__link{
+  color: white;
+  margin-top: 0.5em;
 }
 
 @media (max-width: 1100px) {

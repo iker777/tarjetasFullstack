@@ -27,6 +27,7 @@ const Main = () => {
 
   return (
     <div className="App">
+      <p>Buenos días Iker</p>
       <div className="header">
         <h1 className="header__h1">Juego de tarjetas</h1>
       </div>

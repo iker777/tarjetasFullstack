@@ -9,6 +9,7 @@ import mysql from "mysql2";
 import { ALL } from "dns";
 import { userInfo } from "os";
 
+// Estos son los pasos necesarios si no tuvieramos sequelize
 // const con = mysql.createConnection({
 //   host: "127.0.0.1",
 //   user: "tarjetas",
@@ -22,6 +23,7 @@ import { userInfo } from "os";
 // });
 
 // Rellenar la configuración del sequelize
+// sequelize tiene la ventaja de poder conectar fácilmente con cualquier tipo de base de datos
 const sequelize = new Sequelize("bd_tarjetas", "tarjetas", "Admin1234", {
   host: "localhost",
   dialect: "mysql",
@@ -62,7 +64,7 @@ const User = sequelize.define("user", {
 //     console.error("Unable to create table : ", error);
 //   });
 
-// Creación del servidor
+// Creación del servidor con express
 const app = express();
 const PORT = process.env.PORT || 3030;
 
@@ -78,12 +80,12 @@ app.listen(PORT, () => console.log("Okeyy!"));
 app.get("/", (req, res) =>{
   res.send("Hola Mundo");
 });
-// Parámetros: localhost:3030/nombre/Santy
+// Parámetros en la URL: localhost:3030/nombre/Santy
 app.get("/nombre/:nombre", (req, res) => {
   res.send(`Hola ${req.params.nombre}`);
 })
 
-// Query. Más sencillo para poner más de una variable
+// Query en la URL. Más sencillo para poner más de una variable
 // localhost:3030/user?nombre=Iker
 app.get("/user", (req, res) => {
   res.send(`Hola ${req.query.nombre}`);
