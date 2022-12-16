@@ -10,7 +10,7 @@ const Main = () => {
 
   const [userMail, setUserMail] = useState(null)
 
-  const [cardList, setcardList] = useState([])
+  const [cardList, setCardList] = useState([])
 
   const userSessionLink = useRef(null)
 
@@ -21,7 +21,7 @@ const Main = () => {
     const title = titleElement.current.value;
     const message = titleElement.current.value;
     
-    setcardList([
+    setCardList([
       ...cardList,
       {
         title: title,
@@ -49,7 +49,9 @@ const Main = () => {
         <div
           className="userSession"
           onMouseEnter={() => userSessionLink.current.classList.add("appear")}
-          onMouseLeave={() => userSessionLink.current.classList.remove("appear")}
+          onMouseLeave={() =>
+            userSessionLink.current.classList.remove("appear")
+          }
         >
           <img className="userSession__photo" src={profilePhoto} />
           <p className="userSession__userData">Bienvenido {userMail}</p>
@@ -71,10 +73,19 @@ const Main = () => {
       <div className="header">
         <h1 className="header__h1">Juego de tarjetas</h1>
       </div>
-      {cardList.length > 0 ? <CardContainer cardList={cardList} /> : ""}
-      <FormAddCard 
-        addCard={addCard} 
-        titleElement={titleElement} 
+      {
+        cardList.length > 0 ? 
+          (
+            <CardContainer cardList={cardList} setCardList={setCardList} />
+          ) 
+        : 
+          (
+            ""
+          )
+      }
+      <FormAddCard
+        addCard={addCard}
+        titleElement={titleElement}
         messageElement={messageElement}
       />
     </div>

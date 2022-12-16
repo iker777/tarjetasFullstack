@@ -1,6 +1,7 @@
 import React from 'react'
 
-export const Card = ({title, message}) => {
+export const Card = ({title, message, setCardList, myKey}) => {
+  console.log(myKey)
   return (
       <article className="card">
         <div className="card__head">
@@ -14,7 +15,14 @@ export const Card = ({title, message}) => {
           </div>
           <div className="card__btns">
             <button className="card__btn card__btn--editar">Editar</button>
-            <button className="card__btn card__btn--delete">Borrar</button>
+            <button 
+              className="card__btn card__btn--delete"
+              onClick={() => {
+                setCardList(current => current.filter((card, index) => index != myKey))
+              }}
+            >
+              Borrar
+            </button>
           </div>
         </div>
       </article>
