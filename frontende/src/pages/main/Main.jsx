@@ -19,7 +19,7 @@ const Main = () => {
 
   const addCard = () => {
     const title = titleElement.current.value;
-    const message = titleElement.current.value;
+    const message = messageElement.current.value;
     
     setCardList([
       ...cardList,
