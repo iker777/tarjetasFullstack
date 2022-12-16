@@ -25,8 +25,10 @@
 * If it is correct, backend send the response and frontend can handle that response
 
 ## Frontend
-1. App.js -> Navigation
-2. Main.js -> Card creation
+1. Navigation without refreshing -> App.js
+2. Card creation -> Main.js
+3. Use of axios -> [What is axios](https://www.freecodecamp.org/espanol/news/como-usar-axios-con-react/)
+*Axios is a HTTP client which allows you to make request to a endpoint (in your backend or in another web). Alternative to FETCH API
 
 * Used interesting examples
   1. useNavigate() -> To navigate without refreshing the page

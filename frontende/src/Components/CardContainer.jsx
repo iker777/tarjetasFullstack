@@ -1,11 +1,12 @@
 import React from 'react';
 import { Card } from './Card';
 
-export const CardContainer = ({ cardList, setCardList }) => {
+export const CardContainer = ({ cardList, setCardList, storagedCardList }) => {
+
   return (
     <section className="card__container">
       {
-        cardList.map((cardText, index) => { 
+        storagedCardList.map((cardText, index) => { 
           return (
             <Card 
               title={cardText.title} 

@@ -12,8 +12,19 @@ export const Card = ({title, message, cardList, setCardList, myKey}) => {
     items[myKey].title = titleInput.current.value;
     items[myKey].message = messageInput.current.value;
     setCardList([...items])
+    localStorage.removeItem("cards")
+    localStorage.setItem("cards", JSON.stringify(cardList));
     setEditingCard(false);
   }
+
+  // El primer click no lo borra...
+  const deleteCard = () => {
+    let items = cardList;
+    items = items.filter((card, index) => index != myKey);
+    setCardList([...items])
+    localStorage.removeItem("cards");
+    localStorage.setItem("cards", JSON.stringify(cardList));
+  };
 
   return (
     <article className="card">
@@ -50,11 +61,7 @@ export const Card = ({title, message, cardList, setCardList, myKey}) => {
               </button>
               <button
                 className="card__btn card__btn--delete"
-                onClick={() => {
-                  setCardList((current) =>
-                    current.filter((card, index) => index != myKey)
-                  );
-                }}
+                onClick={deleteCard}
               >
                 Borrar
               </button>

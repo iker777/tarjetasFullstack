@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { CardContainer } from '../../Components/CardContainer';
 import { FormAddCard } from '../../Components/FormAddCard';
+import { saveOnStorage } from '../../helpers/SaveOnStorage';
 import profilePhoto from "../../img/userProfile.png"
 
 const Main = () => {
@@ -29,9 +30,17 @@ const Main = () => {
       },
     ]);
 
+    saveOnStorage("cards", {
+      title: title,
+      message: message
+    })
+
+    
     titleElement.current.value = "";
     messageElement.current.value = "";
   };
+
+  const storagedCardList = JSON.parse(localStorage.getItem("cards")) || [];
 
   const setSesion = () => {
     if (localStorage.user) {
@@ -49,9 +58,7 @@ const Main = () => {
         <div
           className="userSession"
           onMouseEnter={() => userSessionLink.current.classList.add("appear")}
-          onMouseLeave={() =>
-            userSessionLink.current.classList.remove("appear")
-          }
+          onMouseLeave={() => userSessionLink.current.classList.remove("appear")}
         >
           <img className="userSession__photo" src={profilePhoto} />
           <p className="userSession__userData">Bienvenido {userMail}</p>
@@ -74,9 +81,9 @@ const Main = () => {
         <h1 className="header__h1">Juego de tarjetas</h1>
       </div>
       {
-        cardList.length > 0 ? 
+        storagedCardList.length > 0 ? 
           (
-            <CardContainer cardList={cardList} setCardList={setCardList} />
+            <CardContainer cardList={cardList} setCardList={setCardList} storagedCardList={storagedCardList}/>
           ) 
         : 
           (
