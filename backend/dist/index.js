@@ -106,7 +106,6 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
             mail: mail
         }
     });
-    console.log("hola");
     // Si está registrado ya. No hacemos nada.
     if (user) {
         res.send(`El email ya está registrado`);

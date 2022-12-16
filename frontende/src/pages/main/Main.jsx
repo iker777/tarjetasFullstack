@@ -48,8 +48,8 @@ const Main = () => {
       {userMail ? (
         <div
           className="userSession"
-          onMouseEnter={() => userSessionLink.current.classList.add("hola")}
-          onMouseLeave={() => userSessionLink.current.classList.add("hola")}
+          onMouseEnter={() => userSessionLink.current.classList.add("appear")}
+          onMouseLeave={() => userSessionLink.current.classList.remove("appear")}
         >
           <img className="userSession__photo" src={profilePhoto} />
           <p className="userSession__userData">Bienvenido {userMail}</p>

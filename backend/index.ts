@@ -108,7 +108,6 @@ app.post("/register", async (req, res) => {
       mail: mail
     }
   })
-  console.log("hola");
   
   // Si está registrado ya. No hacemos nada.
   if(user){
