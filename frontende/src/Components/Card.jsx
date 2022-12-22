@@ -12,7 +12,7 @@ export const Card = ({card, deleteCard, editCard}) => {
       <div className="card__head">
         {isCardEditing ? (
           <input
-            className=""
+            className="card__text card__update"
             type="text"
             placeholder={card.title}
             ref={titleInput}
@@ -22,10 +22,10 @@ export const Card = ({card, deleteCard, editCard}) => {
         )}
       </div>
       <div className="card__body">
-        <div className="card__text">
+        <div className="">
           {isCardEditing ? (
             <input
-              className=""
+              className="card__text card__update"
               type="text"
               placeholder={card.message}
               ref={messageInput}
@@ -39,7 +39,11 @@ export const Card = ({card, deleteCard, editCard}) => {
             <button
               className="card__btn card__btn--editar"
               onClick={() => {
-                editCard(card.id, titleInput.current.value, messageInput.current.value);
+                editCard(
+                  card.id,
+                  titleInput.current.value,
+                  messageInput.current.value
+                );
                 setisCardEditing(false);
               }}
             >

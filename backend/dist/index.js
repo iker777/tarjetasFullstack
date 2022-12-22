@@ -122,7 +122,7 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     });
     // Si está registrado ya. No hacemos nada.
     if (user) {
-        res.send(`El email ya está registrado`);
+        res.send({ newUserRegisted: false, text: `El email ya está registrado` });
         return;
     }
     // En cambio, si el email no existe, creamos un usuario nuevo dentro de la BBDD
@@ -130,7 +130,12 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         mail,
         paswd,
     });
-    res.send("OK!");
+    user = yield User.findOne({
+        where: {
+            mail: mail
+        }
+    });
+    res.send({ newUserRegisted: true, user });
 }));
 app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mail, paswd } = req.body;
@@ -233,4 +238,18 @@ app.post("/editCard", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
     });
     res.send({ error: false, text: "OK" });
+}));
+// Borrar usuario
+app.post("/deleteUser/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    if (!id || isNaN(parseInt(id))) {
+        res.send({ error: true, text: "cardId incorrecto" });
+        return;
+    }
+    yield User.destroy({
+        where: {
+            id: id
+        }
+    });
+    res.send({ error: false, text: "User deleted" });
 }));

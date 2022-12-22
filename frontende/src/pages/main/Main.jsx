@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { CardContainer } from '../../Components/CardContainer';
 import { FormAddCard } from '../../Components/FormAddCard';
-import { saveOnStorage } from '../../helpers/SaveOnStorage';
 import profilePhoto from "../../img/userProfile.png"
 
 const Main = () => {
@@ -12,7 +11,7 @@ const Main = () => {
   const [userMail, setUserMail] = useState(null);
   const [cards, setCards] = useState([])
 
-  const userSessionLink = useRef(null);
+  const linkContainer = useRef(null);
   const titleElement = useRef(null);
   const messageElement = useRef(null);
 
@@ -34,7 +33,6 @@ const Main = () => {
       window.location.href = "/login";
       return;
     }
-    console.log("ncoerinifer")
     axios.get(`http://localhost:3030/getCards/${user.id}`).then((res) => {
       if(res.data.error){
         alert("Error al hacer la petición");
@@ -113,29 +111,49 @@ const Main = () => {
     });
   }
 
+  // Borrar usuario
+  const deleteUser = () => {
+    const { id } = JSON.parse(localStorage.getItem("user"));
+    axios.post(`http://localhost:3030/deleteUser/${id}`).then((res) => {
+      if (res.data.error) {
+        alert(res.data.text);
+        return;
+      }
+      localStorage.removeItem("user");
+      navigate("/logout");
+    });
+  }
+
   return (
     <div className="App">
       {userMail ? (
         <div
           className="userSession"
-          onMouseEnter={() => userSessionLink.current.classList.add("appear")}
+          onMouseEnter={() => linkContainer.current.classList.add("appear")}
           onMouseLeave={() =>
-            userSessionLink.current.classList.remove("appear")
+            linkContainer.current.classList.remove("appear")
           }
         >
           <img className="userSession__photo" src={profilePhoto} />
           <p className="userSession__userData">Bienvenido {userMail}</p>
-          <button
-            className="userSession__link"
-            ref={userSessionLink}
-            onClick={() => {
-              localStorage.clear();
-              setUserMail(null);
-              window.location.href = "/logout";
-            }}
-          >
-            Salir de la sesión
-          </button>
+          <div className='userSession__linkContainer' ref={linkContainer}>
+            <button
+              className="userSession__link"
+              onClick={() => {
+                localStorage.clear();
+                setUserMail(null);
+                window.location.href = "/logout";
+              }}
+            >
+              Salir de la sesión
+            </button>
+            <button
+              className="userSession__link"
+              onClick={deleteUser}
+            >
+              Borrar usuario
+            </button>
+          </div>
         </div>
       ) : (
         ""
@@ -143,7 +161,13 @@ const Main = () => {
       <div className="header">
         <h1 className="header__h1">Juego de tarjetas</h1>
       </div>
-      { cards && cards.length && <CardContainer deleteCard={deleteCard} editCard={editCard} cardList={cards} />}
+      {cards.length > 0 && (
+        <CardContainer
+          deleteCard={deleteCard}
+          editCard={editCard}
+          cardList={cards}
+        />
+      )}
       <FormAddCard
         addCard={addCard}
         titleElement={titleElement}

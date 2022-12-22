@@ -67,8 +67,13 @@
   font-size: 0.7em;
   text-align: center;
 }
-.userSession__link{
+.userSession__linkContainer{
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.userSession__link{
   color: white;
   background: none;
   border: none;
@@ -78,7 +83,7 @@
   text-decoration: underline;
 }
 .appear{
-  display: block;
+  display: flex;
 }
 
 body {
@@ -126,7 +131,10 @@ body {
   padding: 1em;
   margin: 0.5em;
 }
-
+.card__update{
+  color: white;
+  outline: none;
+}
 .card__btns {
   padding: 0.5em;
   display: flex;

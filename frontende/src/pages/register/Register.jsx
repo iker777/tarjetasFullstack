@@ -24,13 +24,20 @@ const Register = () => {
       ...data,
       [e.target.name]: e.target.value
     })
-    console.log(data);
   }
 
-  const onClick = (e) => {
+  const registerNewUser = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3030/register", data).then((res) => console.log(res));
-    console.log(data);
+    axios
+      .post("http://localhost:3030/register", data)
+      .then((res) => {
+        console.log(res.data.newUserRegisted)
+        if (res.data.newUserRegisted) {
+          localStorage.setItem("user", JSON.stringify(res.data.user))
+          alert(`${res.data.user.mail} has sido registrado con éxito, estás dentro de la aplicación`)
+          navigate("/");
+        }
+      });
   }
 
   return (
@@ -55,7 +62,7 @@ const Register = () => {
           <input
             type="submit"
             value="Enviar"
-            onClick={onClick}
+            onClick={(e) => registerNewUser(e)}
             className="form__submit"
           />
           <Link className="form__link" to="/login">

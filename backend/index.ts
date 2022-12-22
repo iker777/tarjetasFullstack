@@ -126,7 +126,7 @@ app.post("/register", async (req, res) => {
   
   // Si está registrado ya. No hacemos nada.
   if(user){
-    res.send(`El email ya está registrado`);
+    res.send({newUserRegisted: false, text: `El email ya está registrado`});
     return
   }
   
@@ -136,7 +136,12 @@ app.post("/register", async (req, res) => {
     paswd,
   });
   
-  res.send("OK!");
+  user = await User.findOne({
+    where: {
+      mail: mail
+    }
+  })
+  res.send({newUserRegisted:true, user});
 });
 
 app.post("/login", async (req, res) => {
@@ -258,3 +263,18 @@ app.post("/editCard", async(req, res) => {
     )
     res.send({error:false, text: "OK"})
   })
+
+// Borrar usuario
+app.post("/deleteUser/:id", async (req, res) => {
+  const { id } = req.params;
+  if (!id || isNaN(parseInt(id))) {
+    res.send({ error: true, text: "cardId incorrecto" });
+    return;
+  }
+  await User.destroy({
+    where: {
+      id: id
+    }
+  })
+  res.send({error: false, text: "User deleted"});
+})
