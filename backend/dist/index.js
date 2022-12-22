@@ -57,16 +57,31 @@ const User = sequelize.define("user", {
         allowNull: false
     }
 });
+// Definir tabla "cards", relación 1 -> n con "users"
+const Cards = sequelize.define("cards", {
+    userId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
+    title: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    message: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true
+    }
+});
 // Crearía la tabla User .sync() No es necesario, pero se suele utilizar en desarrollo para meter datos
 // Sin necesidad de hacer Inserts a mano
-// sequelize
-//   .sync()
-//   .then(() => {
-//     console.log("User table created successfully!");
-//   })
-//   .catch((error) => {
-//     console.error("Unable to create table : ", error);
-//   });
+sequelize
+    .sync()
+    .then(() => {
+    console.log("User table created successfully!");
+})
+    .catch((error) => {
+    console.error("Unable to create table : ", error);
+});
 // Creación del servidor con express
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3030;
@@ -93,7 +108,6 @@ app.get("/user", (req, res) => {
 // POST-> Insertar información
 app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mail, paswd } = req.body;
-    console.log("Buenas noches");
     if (!mail || !paswd) {
         res.send(`Falta algún dato...`);
         return;
@@ -112,16 +126,14 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     // En cambio, si el email no existe, creamos un usuario nuevo dentro de la BBDD
-    User.create({
+    yield User.create({
         mail,
         paswd,
     });
-    console.log(mail, paswd);
     res.send("OK!");
 }));
 app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mail, paswd } = req.body;
-    console.log("Buenas noches");
     if (!mail || !paswd) {
         res.send(`Falta algún dato...`);
         return;
@@ -146,4 +158,79 @@ app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return;
     }
     res.send(user);
+}));
+// Desde el frontend se hace un post a la url -> "/addCard", desde aquí gestionamos la respuesta de ese POST
+app.post("/addCard", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId, title, message } = req.body;
+    if (!userId || !title) {
+        res.send({
+            error: true,
+            text: "Faltan datos",
+        });
+        return;
+    }
+    let user = yield User.findOne({
+        where: {
+            id: userId,
+        },
+    });
+    if (!user) {
+        res.send({
+            error: true,
+            text: "El usuario no existe",
+        });
+        return;
+    }
+    ;
+    yield Cards.create({
+        userId,
+        title,
+        message,
+    });
+    // Respuesta al frontend
+    res.send({ error: false, text: "OK" });
+}));
+app.get("/getCards/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    if (!userId || isNaN(parseInt(userId))) {
+        res.send({ error: true, text: "userId incorrecto" });
+        return;
+    }
+    const cards = yield Cards.findAll({
+        where: {
+            userId: userId
+        }
+    });
+    res.send({ error: false, data: cards });
+}));
+// Borrar cartas
+app.post("/deleteCard/:cardId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { cardId } = req.params;
+    if (!cardId || isNaN(parseInt(cardId))) {
+        res.send({ error: true, text: "cardId incorrecto" });
+        return;
+    }
+    yield Cards.destroy({
+        where: {
+            id: cardId
+        }
+    });
+    res.send({ error: false, text: "OK" });
+}));
+// Editar cartas
+app.post("/editCard", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { cardId, newTitle, newMessage } = req.body;
+    if (!cardId || isNaN(parseInt(cardId))) {
+        res.send({ error: true, text: "cardId incorrecto" });
+        return;
+    }
+    yield Cards.update({
+        title: newTitle,
+        message: newMessage,
+    }, {
+        where: {
+            id: cardId
+        }
+    });
+    res.send({ error: false, text: "OK" });
 }));

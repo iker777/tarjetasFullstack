@@ -1,21 +1,18 @@
 import React from 'react';
 import { Card } from './Card';
 
-export const CardContainer = ({ cardList, setCardList, storagedCardList }) => {
+export const CardContainer = ({ cardList, deleteCard, editCard }) => {
 
   return (
     <section className="card__container">
       {
-        storagedCardList.map((cardText, index) => { 
+        cardList.map((card, index) => { 
           return (
             <Card 
-              title={cardText.title} 
-              message={cardText.message} 
-              // If I don't use key={index} there is an error. However, I can't use it as prop, so I needed to create myKey to use it inside Card. Why?
+              card={card}
+              deleteCard={deleteCard}
               key={index}
-              myKey={index}
-              cardList={cardList}
-              setCardList={setCardList}
+              editCard={editCard}
             />
           )
         })

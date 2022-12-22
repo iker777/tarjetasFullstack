@@ -9,8 +9,13 @@
 * `sudo service mysql start`
 * `sudo service mysql status`
 
-3. Start a server with express in the backend
+3. Use typescript as development:
+*  npm install typescript -D
+* package.json add a new script -> 
+
+3. Start a server with express in the backend (remember installing dependencies)
 *[Official documentation](https://expressjs.com/es/starter/installing.html)
+*  npm install express --save
 
 4. sequelize -> an easy way to handle databases (ORM for Oracle, Postgres, MySQL, MariaDB, SQLite and SQL Server, and more). You can handle DB in JavaScript/TypeScript. Advantages: it prevents mysql insertions, more security.
 * [Official doc](https://sequelize.org/)

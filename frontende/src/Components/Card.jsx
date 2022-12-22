@@ -1,53 +1,47 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
-export const Card = ({title, message, cardList, setCardList, myKey}) => {
+export const Card = ({card, deleteCard, editCard}) => {
   
-  const [editingCard, setEditingCard] = useState(false)
+  const [isCardEditing, setisCardEditing] = useState(false)
 
   const titleInput = useRef(null)
   const messageInput = useRef(null)
 
-  const updateCard = () => {
-    let items = cardList;
-    items[myKey].title = titleInput.current.value;
-    items[myKey].message = messageInput.current.value;
-    setCardList([...items])
-    localStorage.removeItem("cards")
-    localStorage.setItem("cards", JSON.stringify(cardList));
-    setEditingCard(false);
-  }
-
-  // El primer click no lo borra...
-  const deleteCard = () => {
-    let items = cardList;
-    items = items.filter((card, index) => index != myKey);
-    setCardList([...items])
-    localStorage.removeItem("cards");
-    localStorage.setItem("cards", JSON.stringify(cardList));
-  };
-
   return (
     <article className="card">
       <div className="card__head">
-        {editingCard ? (
-          <input className="" type="text" placeholder={title} ref={titleInput}/>
+        {isCardEditing ? (
+          <input
+            className=""
+            type="text"
+            placeholder={card.title}
+            ref={titleInput}
+          />
         ) : (
-          <h2 className="card__h2 h2">{title}</h2>
+          <h2 className="card__h2 h2">{card.title}</h2>
         )}
       </div>
       <div className="card__body">
         <div className="card__text">
-          {editingCard ? (
-            <input className="" type="text" placeholder={message} ref={messageInput}/>
+          {isCardEditing ? (
+            <input
+              className=""
+              type="text"
+              placeholder={card.message}
+              ref={messageInput}
+            />
           ) : (
-            <p className="card__p">{message}</p>
+            <p className="card__p">{card.message}</p>
           )}
         </div>
         <div className="card__btns">
-          {editingCard ? (
+          {isCardEditing ? (
             <button
               className="card__btn card__btn--editar"
-              onClick={updateCard}
+              onClick={() => {
+                editCard(card.id, titleInput.current.value, messageInput.current.value);
+                setisCardEditing(false);
+              }}
             >
               Actualizar
             </button>
@@ -55,13 +49,13 @@ export const Card = ({title, message, cardList, setCardList, myKey}) => {
             <div>
               <button
                 className="card__btn card__btn--editar"
-                onClick={() => setEditingCard(true)}
+                onClick={() => setisCardEditing(true)}
               >
                 Editar
               </button>
               <button
                 className="card__btn card__btn--delete"
-                onClick={deleteCard}
+                onClick={() => deleteCard(card.id)}
               >
                 Borrar
               </button>

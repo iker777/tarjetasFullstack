@@ -1,13 +1,12 @@
 // Importante: Iniciar la base de datos desde terminal antes de iniciar el proyecto, da igual en que directorio:
-  // sudo service mysql start
-  // check if is it started -> sudo service mysql status
+// sudo service mysql start
+// check if is it started -> sudo service mysql status
 
 import express from "express";
 import cors from "cors";
 import { DataTypes, Sequelize } from "sequelize";
+// No hace falta importarlo, pero para el sequelize es necesario tener la dependencia instalada
 import mysql from "mysql2";
-import { ALL } from "dns";
-import { userInfo } from "os";
 
 // Estos son los pasos necesarios si no tuvieramos sequelize
 // const con = mysql.createConnection({
@@ -53,16 +52,33 @@ const User = sequelize.define("user", {
   }
 })
 
+// Definir tabla "cards", relación 1 -> n con "users"
+const Cards = sequelize.define("cards", {
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+  ,
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  message: {
+    type: DataTypes.STRING,
+    allowNull: true
+  }
+})
+
 // Crearía la tabla User .sync() No es necesario, pero se suele utilizar en desarrollo para meter datos
 // Sin necesidad de hacer Inserts a mano
-// sequelize
-//   .sync()
-//   .then(() => {
-//     console.log("User table created successfully!");
-//   })
-//   .catch((error) => {
-//     console.error("Unable to create table : ", error);
-//   });
+sequelize
+.sync()
+.then(() => {
+  console.log("User table created successfully!");
+})
+.catch((error) => {
+  console.error("Unable to create table : ", error);
+});
 
 // Creación del servidor con express
 const app = express();
@@ -94,7 +110,6 @@ app.get("/user", (req, res) => {
 // POST-> Insertar información
 app.post("/register", async (req, res) => {
   const { mail, paswd } = req.body;
-  console.log("Buenas noches")
   
   if( !mail || !paswd ){
     res.send(`Falta algún dato...`);
@@ -116,18 +131,16 @@ app.post("/register", async (req, res) => {
   }
   
   // En cambio, si el email no existe, creamos un usuario nuevo dentro de la BBDD
-  User.create({
+  await User.create({
     mail,
     paswd,
-  })
+  });
   
-  console.log(mail, paswd);
   res.send("OK!");
 });
 
 app.post("/login", async (req, res) => {
   const { mail, paswd } = req.body;
-  console.log("Buenas noches");
   
   if (!mail || !paswd) {
     res.send(`Falta algún dato...`);
@@ -147,14 +160,101 @@ app.post("/login", async (req, res) => {
     })
     return
   }
-
+  
   if(user.dataValues.paswd != paswd){
-     res.send({
-       error: true,
-       text: "Contraseña incorrecto",
-     });
-     return
+    res.send({
+      error: true,
+      text: "Contraseña incorrecto",
+    });
+    return
   }
-
+  
   res.send(user);
 });
+
+// Desde el frontend se hace un post a la url -> "/addCard", desde aquí gestionamos la respuesta de ese POST
+app.post("/addCard", async (req, res) => {
+  const { userId, title, message } = req.body;
+  if(!userId || !title){
+    res.send({
+      error: true,
+      text: "Faltan datos",
+    });
+    return
+  }
+  let user = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
+  
+  
+  if (!user) {
+    res.send({
+      error: true,
+      text: "El usuario no existe",
+    });
+    return;
+  };
+  
+  await Cards.create({
+    userId,
+    title,
+    message,
+  });
+  
+  // Respuesta al frontend
+  res.send({error: false, text: "OK"})
+})
+
+app.get("/getCards/:userId", async (req, res) => {
+  const { userId } = req.params;
+  if (!userId || isNaN(parseInt(userId))) {
+    res.send({ error: true, text: "userId incorrecto" });
+    return;
+  }
+  
+  const cards = await Cards.findAll({
+    where: {
+      userId: userId
+    }
+  })
+  res.send({error: false, data: cards})
+})
+
+// Borrar cartas
+app.post("/deleteCard/:cardId", async (req, res) => {
+  const { cardId } = req.params;
+  if(!cardId || isNaN(parseInt(cardId))) {
+    res.send({ error: true, text: "cardId incorrecto" });
+    return;
+  }
+  
+  await Cards.destroy({
+    where: {
+      id: cardId
+    }
+  })
+  res.send({error: false, text: "OK"});
+})
+
+// Editar cartas
+app.post("/editCard", async(req, res) => {
+  const {cardId, newTitle, newMessage} = req.body
+  if (!cardId || isNaN(parseInt(cardId))) {
+    res.send({ error: true, text: "cardId incorrecto" });
+    return;
+  }
+  await Cards.update(
+    {
+      title: newTitle,
+      message: newMessage,
+    },
+    {
+      where: {
+        id: cardId
+      }
+    }
+    )
+    res.send({error:false, text: "OK"})
+  })

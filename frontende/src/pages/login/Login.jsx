@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom"
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-  let navigate = useNavigate()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem("user")) {
+      navigate("/");
+      return;
+    }
+  });
 
   const [data, setData] = useState({
     mail: null,
@@ -35,9 +41,10 @@ const Login = () => {
           }
           alert(`Hola ${res.data.mail}`);
           localStorage.setItem("user", JSON.stringify(res.data))
-          navigate("/main", {replace: true})
+          window.location.href = "/"
+          // navigate("/", {replace: true})
+          // getSavedCards();
         });
-      console.log("Se ve! Se ve!");
     };
 
   return (
