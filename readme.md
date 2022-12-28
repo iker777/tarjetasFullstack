@@ -19,7 +19,18 @@
 
 4. sequelize -> an easy way to handle databases (ORM for Oracle, Postgres, MySQL, MariaDB, SQLite and SQL Server, and more). You can handle DB in JavaScript/TypeScript. Advantages: it prevents mysql insertions, more security.
 * [Official doc](https://sequelize.org/)
-* Connect your backend with DB
+* Connect your backend with DB 
+  * <b><u>MYSQL:</u></b> Important! You need to have a user with privileges to connect it.
+  * 1. create a user in your database: 
+  `CREATE USER 'tarjetas'@'localhost' IDENTIFIED BY 'Admin1234';`
+  * 2. Give him privileges in your database: `GRANT PRIVILEGE ON database.bd_tarjetas TO 'tarjetas'@'localhost';`
+  * 3. Connect it with your backend (Sequelize): 
+      `const sequelize = new Sequelize("bd_tarjetas", "tarjetas", "Admin1234", {
+        host: "localhost",
+        dialect: "mysql",
+      });`
+  * 4. How can I watch ALL users of MYSQL: `SELECT user FROM mysql.user;`
+  * 5. How can I watch user's privileges? `SHOW GRANTS FOR 'tarjetas'@'localhost';`
 * Create a model/models (table/tables)
 
 5. Express -> POST, GET

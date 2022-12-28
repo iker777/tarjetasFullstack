@@ -161,7 +161,7 @@ const Main = () => {
       <div className="header">
         <h1 className="header__h1">Juego de tarjetas</h1>
       </div>
-      {cards.length > 0 && (
+      {cards && cards.length > 0 && (
         <CardContainer
           deleteCard={deleteCard}
           editCard={editCard}
