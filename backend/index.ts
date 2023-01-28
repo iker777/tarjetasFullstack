@@ -107,7 +107,7 @@ app.get("/user", (req, res) => {
   res.send(`Hola ${req.query.nombre}`);
 })
 
-// POST-> Insertar información
+// REGISTER: POST-> Insertar información
 app.post("/register", async (req, res) => {
   const { mail, paswd } = req.body;
   
@@ -143,7 +143,7 @@ app.post("/register", async (req, res) => {
   })
   res.send({newUserRegisted:true, user});
 });
-
+// LOGIN
 app.post("/login", async (req, res) => {
   const { mail, paswd } = req.body;
   

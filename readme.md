@@ -19,18 +19,28 @@
 
 4. sequelize -> an easy way to handle databases (ORM for Oracle, Postgres, MySQL, MariaDB, SQLite and SQL Server, and more). You can handle DB in JavaScript/TypeScript. Advantages: it prevents mysql insertions, more security.
 * [Official doc](https://sequelize.org/)
+*[DigitalOcean Tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-sequelize-with-node-js-and-mysql)
 * Connect your backend with DB 
   * <b><u>MYSQL:</u></b> Important! You need to have a user with privileges to connect it.
-  * 1. create a user in your database: 
-  `CREATE USER 'tarjetas'@'localhost' IDENTIFIED BY 'Admin1234';`
-  * 2. Give him privileges in your database: `GRANT PRIVILEGE ON database.bd_tarjetas TO 'tarjetas'@'localhost';`
-  * 3. Connect it with your backend (Sequelize): 
+  * 0. create your databse:
+  `CREATE DATABASE bd_tarjetas;`
+
+  * 1. <b>create a user</b>, each user can have access to some databases, all databases or none of them.: 
+  `CREATE USER 'tarjetas'@'localhost' IDENTIFIED BY 'Admin1234';`  
+  <sup>When you create the user, you also are creating in what host it "lives"</sup>  
+  <sup>You also can create an user without password, when you stablish conection between db and backend, sequelize you only need to let password like this "". That's it.</sup>
+
+  * 2. Give him privileges in one of your databases or more: `GRANT ALL ON db_twitter.* TO 'twitter_admin'@'localhost'; `  
+    <b>[Youtube's good explanatin](https://www.youtube.com/watch?v=DL90W9Z3_y4&ab_channel=OracleDatabaseSolutions)</b>
+
+  * 3.1 How can I watch ALL users of MYSQL: `SELECT user FROM mysql.user;`
+  * 3.2 How can I watch user's privileges? `SHOW GRANTS FOR 'tarjetas'@'localhost';`
+
+  * 5. Connect it with your backend (Sequelize): 
       `const sequelize = new Sequelize("bd_tarjetas", "tarjetas", "Admin1234", {
         host: "localhost",
         dialect: "mysql",
       });`
-  * 4. How can I watch ALL users of MYSQL: `SELECT user FROM mysql.user;`
-  * 5. How can I watch user's privileges? `SHOW GRANTS FOR 'tarjetas'@'localhost';`
 * Create a model/models (table/tables)
 
 5. Express -> POST, GET
@@ -39,6 +49,8 @@
 * Login page -> Post. That Post's body is user's mail and password
 * In the backend we can handle if user's data is correct or not
 * If it is correct, backend send the response and frontend can handle that response
+
+7. Install cors: Cross-Origin Resource Sharing (CORS) is a browser security feature that restricts cross-origin HTTP requests initiated from scripts running in the browser. [Install it as a dependency](https://www.npmjs.com/package/cors) `$ npm install cors`
 
 ## Frontend
 1. Navigation without refreshing -> App.js
