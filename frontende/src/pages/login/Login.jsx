@@ -8,7 +8,6 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
-      navigate("/");
       return;
     }
   });

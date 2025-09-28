@@ -26,7 +26,6 @@ const Main = () => {
     getCards()
   }, [])
 
-  // De primeras quiero que aparezcan las tarjetas, ¿cómo llamo a la base de datos?
   const getCards = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {

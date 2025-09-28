@@ -105,7 +105,7 @@ app.get("/nombre/:nombre", (req, res) => {
 app.get("/user", (req, res) => {
     res.send(`Hola ${req.query.nombre}`);
 });
-// POST-> Insertar información
+// REGISTER: POST-> Insertar información
 app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mail, paswd } = req.body;
     if (!mail || !paswd) {
@@ -137,6 +137,7 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     });
     res.send({ newUserRegisted: true, user });
 }));
+// LOGIN
 app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { mail, paswd } = req.body;
     if (!mail || !paswd) {
